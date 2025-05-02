@@ -15,15 +15,21 @@ import {
 } from "vscode";
 import { HostConfig, HostKind } from "./remotesConfig";
 
+let enc = new TextEncoder();
+let dec = new TextDecoder();
+
 export function encode_remote_host(host: string): string {
-    const encoded = encodeURIComponent(Buffer.from(host).toString("hex"));
+    const hostHex = Array.from(enc.encode(host)).map(b => b.toString(16).padStart(2, '0')).join('');
+    const encoded = encodeURIComponent(hostHex);
     return `remote-oss+--${encoded}`;
 }
 
 export function decode_remote_host(encoded: string): [string | undefined, boolean] {
     var match = encoded.match(/remote-oss\+--(.*)/);
     if (match) {
-        const decoded = Buffer.from(decodeURIComponent(match[1]), "hex").toString();
+        const matchHex = decodeURIComponent(match[1]);
+        const matchBytes = new Uint8Array(matchHex.match(/../g)?.map((b) => parseInt(b, 16)) || []);
+        const decoded = dec.decode(matchBytes);
         return [decoded, false];
     }
     var match = encoded.match(/remote-oss\+(.*)/);

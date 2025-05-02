@@ -2,10 +2,10 @@
     "name": "remote-oss",
     "displayName": "Remote (OSS)",
     "description": "Remote (OSS)",
-    "version": "0.0.5",
-    "publisher": "xaberus",
+    "version": "0.0.0",
+    "publisher": "codeforx",
     "repository": {
-        "url": "https://github.com/xaberus/vscode-remote-oss"
+        "url": "https://github.com/codeforx/vscode-remote-oss"
     },
     "license": "MIT",
     "engines": {
@@ -29,7 +29,7 @@
         "onCommand:remote-oss.showLog",
         "onView:remoteHosts"
     ],
-    "main": "./out/extension.js",
+    "browser": "./out/extension.js",
     "capabilities": {
         "untrustedWorkspaces": {
             "supported": true
